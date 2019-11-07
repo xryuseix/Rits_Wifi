@@ -1,8 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-# path = './pass.conf'
-path = '/Users/ryuse/Programming/Python/scraping/pass.txt'
+path = './pass.txt'
 password = ''
 id = 'is0493kk'                     # userid
 
