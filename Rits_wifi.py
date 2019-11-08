@@ -1,20 +1,22 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+import yaml
 
-path = './pass.txt'
-password = ''
-id = 'is0493kk'                     # userid
 
-with open(path) as f:               # read password
-    s = f.read()
-    password = s
+## ------*----- config -----*----- ##
+# Webauth URL
+url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
+# RainbowID
+account = open("./config/rainbow.yml", "r+")
+account = yaml.load(account)
 
-option = Options()                  # prepare opetions
-option.add_argument('--headless')   # add headless-setting
+# headlessで実行
+option = Options()
+#option.add_argument('--headless')
 driver = webdriver.Chrome(options=option)
 
-driver.get("https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html")
-driver.find_element_by_name('username').send_keys(id)
-driver.find_element_by_name('password').send_keys(password)
+driver.get(url)
+driver.find_element_by_name('username').send_keys(account['ID'])
+driver.find_element_by_name('password').send_keys(account['PW'])
 driver.find_element_by_name('Submit').click()
 driver.close()
