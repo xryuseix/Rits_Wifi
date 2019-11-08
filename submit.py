@@ -1,8 +1,16 @@
 from crawling import Crawling
+import yaml
 
+## ------*----- config -----*----- ##
+# Webauth URL
 url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
+# RainbowID
+account = open("./config/password.yml", "r+")
+account = yaml.load(account)
 
 agent = Crawling(url)
-print(len(agent.css('input')))
-agent.send(name='username', value='is------')
-agent.send(name='password', value='00000000')
+# フォーム送信
+agent.send(name='username', value=account['ID'])
+agent.send(name='password', value=account['PW'])
+agent.submit(method='post')
+print(agent.html)
