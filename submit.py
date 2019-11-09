@@ -6,12 +6,7 @@ import os
 # Webauth URL
 url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
 # RainbowID
-if os.path.exists("./config/rainbow.yml"):
-    print('hello')
-    account = open("./config/rainbow.yml", "r+")
-    account = yaml.load(account)
-else:
-    print('file not exist')
+if not os.path.exists("./config/rainbow.yml"):
     os.makedirs('./config/', exist_ok=True)
     with open('./config/rainbow.yml', 'w') as f:
         yaml.dump({
@@ -19,6 +14,8 @@ else:
             "PW": input('your rainbow PW:')
         }, f, default_flow_style=False)
 
+account = open("./config/rainbow.yml", "r+")
+account = yaml.safe_load(account)
 
 exit()
 
