@@ -1,4 +1,4 @@
-require './lib/crawling.rb'
+require './lib/scripts/crawling'
 require 'yaml'
 
 def check_ssid
@@ -8,9 +8,14 @@ def check_ssid
   return ret
 end
 
-def connect(ssid, url, userdata)
+def connect(ssid, url, account)
   ## -----*----- Wi-Fi接続 -----*----- ##
-  p 'ここはconnect関数'
+  agent = Crawling.new(url)
+  agent.send(name:'username', value:account[:ID])
+  agent.send(name:'password', value:account[:PW])
+  agent.submit(method:'post')
+  print(agent.html)
+
 end
 
 def fetch_account
