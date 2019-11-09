@@ -6,6 +6,7 @@ require 'yaml'
 url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
 # RainbowID
 file = './config/rainbow.yml'
+# configが存在しない場合 => 新規作成
 unless File.exist?(file)
   rainbow = {}
   print "Input your ID: "; rainbow[:ID] = gets.chop
