@@ -1,4 +1,4 @@
-require './lib/crawling.rb'
+require './lib/scripts/crawling'
 require 'yaml'
 
 def check_ssid
