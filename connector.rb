@@ -1,6 +1,17 @@
 require './lib/crawling.rb'
 require 'yaml'
 
+def check_ssid
+  ret = `/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I | /usr/bin/grep -ie '^\s*ssid'  | cut -d ":" -f 2`
+  ret.strip!
+  return ret
+end
+
+def connect(ssid, url, userdata)
+  p 'ここはconnect関数'
+end
+
+
 ## -----*----- config -----*----- ##
 # Webauth URL
 url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
@@ -14,6 +25,12 @@ unless File.exist?(file)
   Dir.mkdir('config')
   YAML.dump(rainbow, File.open('./config/rainbow.yml', 'w'))
 end
-p File.exist?(file)
+
+ssid = check_ssid
+userdata = YAML.load(open(file, 'r'))
+
+p ssid
 p url
-p YAML.load(open(file, 'r'))
+p userdata
+
+connect(ssid, url, userdata)
