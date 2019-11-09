@@ -10,8 +10,6 @@ end
 
 def connect(ssid, url, account)
   ## -----*----- Wi-Fi接続 -----*----- ##
-  require './lib/scripts/crawling'
-
   agent = Crawling.new(url)
   agent.send(name:'username', value:account[:ID])
   agent.send(name:'password', value:account[:PW])
