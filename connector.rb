@@ -2,35 +2,43 @@ require './lib/crawling.rb'
 require 'yaml'
 
 def check_ssid
+  ## -----*----- 現在接続中のSSID検出 -----*----- ##
   ret = `/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I | /usr/bin/grep -ie '^\s*ssid'  | cut -d ":" -f 2`
   ret.strip!
   return ret
 end
 
 def connect(ssid, url, userdata)
+  ## -----*----- Wi-Fi接続 -----*----- ##
   p 'ここはconnect関数'
 end
 
-
-## -----*----- config -----*----- ##
-# Webauth URL
-url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
-# RainbowID
-file = './config/rainbow.yml'
-# configが存在しない場合 => 新規作成
-unless File.exist?(file)
+def fetch_account
+  ## -----*----- config -----*----- ##
+  file = './config/rainbow.yml'
   rainbow = {}
-  print "Input your ID: "; rainbow[:ID] = gets.chop
-  print "Input your PW: "; rainbow[:PW] = gets.chop
-  Dir.mkdir('config')
-  YAML.dump(rainbow, File.open('./config/rainbow.yml', 'w'))
+
+  # configが存在しない場合 => 新規作成
+  if File.exist?(file)
+    rainbow = YAML.load(open(file,'r'))
+  else
+    print "Input your ID: "; rainbow[:ID] = gets.chop
+    print "Input your PW: "; rainbow[:PW] = gets.chop
+    Dir.mkdir('config')
+    YAML.dump(rainbow, File.open('./config/rainbow.yml', 'w'))
+  end
+
+  rainbow
 end
 
+
+# rainbowIDの読み込み
+url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
+login = fetch_account
 ssid = check_ssid
-userdata = YAML.load(open(file, 'r'))
 
 p ssid
 p url
-p userdata
+p login
 
-connect(ssid, url, userdata)
+connect(ssid, url, login)
