@@ -8,7 +8,7 @@ import yaml
 url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
 # RainbowID
 account = open("./config/rainbow.yml", "r+")
-account = yaml.load(account)
+account = yaml.safe_load(account)
 
 # headlessで実行
 option = Options()
