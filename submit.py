@@ -9,7 +9,7 @@ url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
 if os.path.exists("./config/rainbow.yml"):
     print('hello')
     account = open("./config/rainbow.yml", "r+")
-    account = yaml.load(account)
+    account = yaml.safe_load(account)
 else:
     print('file not exist')
     os.makedirs('./config/', exist_ok=True)
