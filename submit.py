@@ -16,9 +16,9 @@ if not os.path.exists("./config/rainbow.yml"):
 
 account = open("./config/rainbow.yml", "r+")
 account = yaml.safe_load(account)
-print(account)
+#print(account)
 
-exit()
+#exit()
 
 agent = Crawling(url)
 # フォーム送信
