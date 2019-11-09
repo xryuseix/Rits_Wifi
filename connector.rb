@@ -15,7 +15,7 @@ end
 
 def fetch_account
   ## -----*----- config -----*----- ##
-  file = './config/rainbow.yml'
+  file = './config/login.yml'
   rainbow = {}
 
   # configが存在しない場合 => 新規作成
@@ -24,8 +24,8 @@ def fetch_account
   else
     print "Input your ID: "; rainbow[:ID] = gets.chop
     print "Input your PW: "; rainbow[:PW] = gets.chop
-    Dir.mkdir('config')
-    YAML.dump(rainbow, File.open('./config/rainbow.yml', 'w'))
+    Dir.mkdir(File.dirname(file))
+    YAML.dump(rainbow, File.open(file, 'w'))
   end
 
   rainbow
