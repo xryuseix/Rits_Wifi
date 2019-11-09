@@ -8,14 +8,15 @@ def check_ssid
   return ret
 end
 
-def connect(ssid, url, account)
+def connect
   ## -----*----- Wi-Fi接続 -----*----- ##
+
+  ssid = check_ssid
+
   agent = Crawling.new(url)
   agent.send(name:'username', value:account[:ID])
   agent.send(name:'password', value:account[:PW])
   agent.submit(method:'post')
-  print(agent.html)
-
 end
 
 def fetch_account
@@ -46,4 +47,4 @@ p ssid
 p url
 p login
 
-connect(ssid, url, login)
+connect
