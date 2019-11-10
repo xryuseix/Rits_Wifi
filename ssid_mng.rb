@@ -1,5 +1,12 @@
 require 'yaml'
 
+def check_ssid
+  ## -----*----- 現在接続中のSSID検出 -----*----- ##
+  ret = `/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I | /usr/bin/grep -ie '^\s*ssid'  | cut -d ":" -f 2`
+  ret.strip!
+  return ret
+end
+
 data = YAML.load(open('./config/login.yml', 'r'))
 
 # ===== Select Mode ==========
@@ -34,7 +41,12 @@ when 1 then
 
 when 2 then
   ## -----*----- Add SSID -----*----- ##
-
+  print "Input your ID: "; id = gets.chop
+  print "Input your PW: "; pw = gets.chop
+  print "Input URL: "; url = gets.chop
+  ssid = check_ssid
+  
+  data[ssid] = {'ID' => id, 'PW' => pw, 'URL' => url}
 
 when 3 then
   ## -----*----- Exit -----*----- ##
