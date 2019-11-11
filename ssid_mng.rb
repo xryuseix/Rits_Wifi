@@ -7,7 +7,8 @@ def check_ssid
   return ret
 end
 
-data = YAML.load(open('./config/login.yml', 'r'))
+file = './config/login.yml'
+data = YAML.load(open(file, 'r'))
 
 # ===== Select Mode ==========
 puts " | 1: Change SSID config"
@@ -53,5 +54,4 @@ when 3 then
   exit
 end
 
-file = './config/login.yml'
 YAML.dump(data, File.open(file, 'w'))
