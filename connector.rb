@@ -8,42 +8,47 @@ def check_ssid
   return ret
 end
 
-def connect(ssid, url, account)
+def connect
   ## -----*----- Wi-Fi接続 -----*----- ##
+
+  ssid = check_ssid
+
   agent = Crawling.new(url)
   agent.send(name:'username', value:account[:ID])
   agent.send(name:'password', value:account[:PW])
   agent.submit(method:'post')
-  print(agent.html)
-
 end
 
 def fetch_account
   ## -----*----- config -----*----- ##
   file = './config/login.yml'
-  rainbow = {}
+  data = {}
 
   # configが存在しない場合 => 新規作成
   if File.exist?(file)
-    rainbow = YAML.load(open(file,'r'))
+    data = YAML.load(open(file,'r'))
   else
-    print "Input your ID: "; rainbow[:ID] = gets.chop
-    print "Input your PW: "; rainbow[:PW] = gets.chop
+    # ここ，ssid_mngのadd処理に置換して良さそうだけど一応このままで置いとく
+    print "Input your ID: "; id = gets.chop
+    print "Input your PW: "; pw = gets.chop
+    print "Input URL: "; url = gets.chop
+    ssid = check_ssid
+  
+    data[ssid] = {ID: id, PW: pw, URL: url}
     Dir.mkdir(File.dirname(file))
-    YAML.dump(rainbow, File.open(file, 'w'))
+    YAML.dump(data, File.open(file, 'w'))
   end
 
-  rainbow
+  data
 end
 
 
 # rainbowIDの読み込み
-url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
 login = fetch_account
-ssid = check_ssid
 
-p ssid
-p url
+# このURLはデバッグ用
+# url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
+
 p login
 
-connect(ssid, url, login)
+connect
