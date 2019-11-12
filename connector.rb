@@ -34,7 +34,7 @@ def fetch_account
     print "Input URL: "; url = gets.chop
     ssid = check_ssid
   
-    data[ssid] = {'ID' => id, 'PW' => pw, 'URL' => url}
+    data[ssid] = {ID: id, PW: pw, URL: url}
     Dir.mkdir(File.dirname(file))
     YAML.dump(data, File.open(file, 'w'))
   end
