@@ -33,10 +33,10 @@ when 1 then
   account.keys.each_with_index do  |value, i|
     puts " | #{i+1}: #{value}"
   end
-  print "Select Change Item Number: "
+  print "Select Change Column Number: "
   changenum = gets.to_i-1
 
-  print "Imput the value \"#{account.values[changenum]}\" ->: "
+  print "New Value \"#{account.values[changenum]}\" =>: "
   data[data.keys[datanum]][account.keys[changenum]] = gets.chomp
 # ===============
 
@@ -46,8 +46,8 @@ when 2 then
   print "Input your PW: "; pw = gets.chop
   print "Input URL: "; url = gets.chop
   ssid = check_ssid
-  
-  data[ssid] = {'ID' => id, 'PW' => pw, 'URL' => url}
+
+  data[ssid] = {ID: id, PW: pw, URL: url}
 
 when 3 then
   # ===== Exit ==========
