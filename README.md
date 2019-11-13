@@ -1,7 +1,5 @@
 # Wifi Auto-Connector
 
-===================
-
 Web認証のWifi接続を自動化
 
 ## 実行方法
