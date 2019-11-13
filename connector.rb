@@ -8,15 +8,14 @@ def check_ssid
   return ret
 end
 
-def connect
+def connect(data, ssid)
   ## -----*----- Wi-Fi接続 -----*----- ##
-
-  ssid = check_ssid
-
-  agent = Crawling.new(url)
-  agent.send(name:'username', value:account[:ID])
-  agent.send(name:'password', value:account[:PW])
-  agent.submit(method:'post')
+  data = data[ssid]
+  agent = Crawling.new(data[:URL])
+  agent.send(name: 'username', value: data[:ID])
+  agent.send(name: 'password', value: data[:PW])
+  agent.submit(method: 'POST')
+  File.open('respose.html', 'w') {|f| f.puts(agent.html)}
 end
 
 def fetch_account
@@ -49,6 +48,4 @@ login = fetch_account
 # このURLはデバッグ用
 # url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
 
-p login
-
-connect
+connect(login, 'Rits-Webauth')
