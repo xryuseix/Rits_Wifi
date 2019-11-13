@@ -68,8 +68,8 @@ end
 # rainbowIDの読み込み
 login = fetch_account
 
-# このURLはデバッグ用
 # url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
+# このURLはデバッグ用
 
 
 connect(login)
