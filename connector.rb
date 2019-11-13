@@ -8,6 +8,7 @@ def check_ssid
   return ret
 end
 
+<<<<<<< HEAD
 def connect(data, ssid)
   ## -----*----- Wi-Fi接続 -----*----- ##
   data = data[ssid]
@@ -16,6 +17,16 @@ def connect(data, ssid)
   agent.send(name: 'password', value: data[:PW])
   agent.submit(method: 'POST')
   File.open('respose.html', 'w') {|f| f.puts(agent.html)}
+=======
+def connect(ssid, account)
+  ## -----*----- Wi-Fi接続 -----*----- ##
+  account = account[ssid]
+
+  agent = Crawling.new(account[:URL])
+  agent.send(name:'username', value:account[:ID])
+  agent.send(name:'password', value:account[:PW])
+  agent.submit(method:'POST')
+>>>>>>> test
 end
 
 def fetch_account
@@ -45,7 +56,11 @@ end
 # rainbowIDの読み込み
 login = fetch_account
 
+<<<<<<< HEAD
 # このURLはデバッグ用
 # url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
 
 connect(login, 'Rits-Webauth')
+=======
+connect('Rits-Webauth', login)
+>>>>>>> test
