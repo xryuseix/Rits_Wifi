@@ -1,5 +1,5 @@
-require './lib/scripts/crawling'
 require 'yaml'
+require 'selenium-webdriver'
 
 def check_ssid
   ## -----*----- 現在接続中のSSID検出 -----*----- ##
@@ -8,14 +8,38 @@ def check_ssid
   return ret
 end
 
-def connect(data, ssid)
+def connect(data)
   ## -----*----- Wi-Fi接続 -----*----- ##
-  data = data[ssid]
-  agent = Crawling.new(data[:URL])
-  agent.send(name: 'username', value: data[:ID])
-  agent.send(name: 'password', value: data[:PW])
-  agent.submit(method: 'POST')
-  File.open('respose.html', 'w') {|f| f.puts(agent.html)}
+  data = data[check_ssid]
+
+  # Seleniumの初期化
+  @wait_time = 3
+  @timeout = 0
+  Selenium::WebDriver.logger.level = :warn
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  driver = Selenium::WebDriver.for :chrome, options: options
+  driver.manage.timeouts.implicit_wait = @timeout
+  wait = Selenium::WebDriver::Wait.new(timeout: @wait_time)
+  
+  # サイトを開く
+  driver.get(data[:URL])
+
+  begin
+    username = driver.find_element(:name, 'username')
+    password = driver.find_element(:name, 'password')
+    button = driver.find_element(:name, 'Submit')
+  rescue Selenium::WebDriver::Error::NoSuchElementError
+    p 'no such element error!!'
+    return
+  end
+
+  username.send_keys data[:ID]
+  password.send_keys data[:PW]
+  button.click
+
+  # ドライバーを閉じる
+  driver.quit
 
 end
 
@@ -46,8 +70,8 @@ end
 # rainbowIDの読み込み
 login = fetch_account
 
-
-# このURLはデバッグ用
 # url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
+# このURLはデバッグ用
 
-connect(login, 'Rits-Webauth')
+
+connect(login)
