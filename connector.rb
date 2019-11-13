@@ -8,41 +8,18 @@ def check_ssid
   return ret
 end
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 def connect(data, ssid)
-  ## -----*----- Wi-Fi接続 -----*----- ##
-  data = data[ssid]
-  agent = Crawling.new(data[:URL])
-  agent.send(name: 'username', value: data[:ID])
-  agent.send(name: 'password', value: data[:PW])
-  agent.submit(method: 'POST')
-  File.open('respose.html', 'w') {|f| f.puts(agent.html)}
-=======
-def connect(ssid, account)
-  ## -----*----- Wi-Fi接続 -----*----- ##
-  account = account[ssid]
-
-  agent = Crawling.new(account[:URL])
-  agent.send(name:'username', value:account[:ID])
-  agent.send(name:'password', value:account[:PW])
-  agent.submit(method:'POST')
->>>>>>> test
-=======
-def connect(data)
   ## -----*----- Wi-Fi接続 -----*----- ##
   data = data[check_ssid]
 
   # Seleniumの初期化
-  @wait_time = 3
   @timeout = 0
   Selenium::WebDriver.logger.level = :warn
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--headless')
   driver = Selenium::WebDriver.for :chrome, options: options
   driver.manage.timeouts.implicit_wait = @timeout
-  wait = Selenium::WebDriver::Wait.new(timeout: @wait_time)
-  
+
   # サイトを開く
   driver.get(data[:URL])
 
@@ -61,8 +38,6 @@ def connect(data)
 
   # ドライバーを閉じる
   driver.quit
-
->>>>>>> selenium
 end
 
 def fetch_account
@@ -79,7 +54,7 @@ def fetch_account
     print "Input your PW: "; pw = gets.chop
     print "Input URL: "; url = gets.chop
     ssid = check_ssid
-  
+
     data[ssid] = {ID: id, PW: pw, URL: url}
     Dir.mkdir(File.dirname(file))
     YAML.dump(data, File.open(file, 'w'))
@@ -92,15 +67,6 @@ end
 # rainbowIDの読み込み
 login = fetch_account
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-# このURLはデバッグ用
 # url = "https://webauth.ritsumei.ac.jp/fs/customwebauth/login.html"
 
 connect(login, 'Rits-Webauth')
-=======
-connect('Rits-Webauth', login)
->>>>>>> test
-=======
-connect(login)
->>>>>>> selenium
