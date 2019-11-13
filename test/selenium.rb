@@ -16,7 +16,9 @@ def connect(data)
   @wait_time = 3
   @timeout = 0
   Selenium::WebDriver.logger.level = :warn
-  driver = Selenium::WebDriver.for :chrome
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless')
+  driver = Selenium::WebDriver.for :chrome, options: options
   driver.manage.timeouts.implicit_wait = @timeout
   wait = Selenium::WebDriver::Wait.new(timeout: @wait_time)
   
