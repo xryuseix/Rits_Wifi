@@ -20,6 +20,8 @@ $ ruby ssid_mng.rb
 
 - macOS Catalina 10.15.1
 - Ruby 2.6.3
+- Selenium
+- Chrome Driver
 
 
 ## インストール
