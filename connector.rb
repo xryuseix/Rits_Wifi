@@ -1,5 +1,6 @@
 require 'yaml'
 require 'selenium-webdriver'
+require './getpass.rb'
 
 def check_ssid
   ## -----*----- 現在接続中のSSID検出 -----*----- ##
@@ -50,13 +51,11 @@ def fetch_account
     data = YAML.load(open(file,'r'))
   else
     # ここ，ssid_mngのadd処理に置換して良さそうだけど一応このままで置いとく
-    print "Input your ID: "; id = gets.chop
-    print "Input your PW: "; pw = gets.chop
-    print "Input URL: "; url = gets.chop
+    id, pw, url = getpass(prompt:["ID", "PW", "URL"], is_display:[true, false, true])
     ssid = check_ssid
 
     data[ssid] = {ID: id, PW: pw, URL: url}
-    Dir.mkdir(File.dirname(file))
+    Dir.mkdir(File.dirname(file)) unless Dir.exist?(File.dirname(file))
     YAML.dump(data, File.open(file, 'w'))
   end
 
